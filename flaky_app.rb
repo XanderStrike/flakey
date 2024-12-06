@@ -12,6 +12,7 @@ get '/' do
     
     <ul>
       <li><code>/</code> - random status code</li>
+      <li><code>/status/404</code> - specific status code</li>
       <li><code>/flaky/50</code> - fails 50% of the time</li>
       <li><code>/delay/5</code> - 5 second delay</li>
       <li><code>/memory/10</code> - allocate 10mb</li>
@@ -21,6 +22,17 @@ get '/' do
       <li><code>/stream/10</code> - stream for 10s</li>
     </ul>
   HTML
+end
+
+get '/status/:code' do |code|
+  code = code.to_i
+  if code < 100 || code > 599
+    status 400
+    "Status code must be between 100-599"
+  else
+    status code
+    "Returned status code #{code}"
+  end
 end
 
 get '/flaky/:failure_rate' do |failure_rate|
