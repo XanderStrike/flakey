@@ -3,6 +3,8 @@ require 'http'
 
 counter = 0
 
+set :environment, :production
+
 get '/' do
   status_codes = [200, 201, 202, 301, 302, 400, 401, 403, 404, 500, 502, 503]
   status status_codes.sample
