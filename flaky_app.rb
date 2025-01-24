@@ -22,8 +22,15 @@ get '/' do
       <li><code>/chain/3</code> - 3 chained requests</li>
       <li><code>/size/1024</code> - 1mb response</li>
       <li><code>/stream/10</code> - stream for 10s</li>
+      <li><code>/headers</code> - show request headers</li>
     </ul>
   HTML
+end
+
+get '/headers' do
+  content_type 'text/plain'
+  request.env.map { |k,v| "#{k.sub(/^HTTP_/, '')}: #{v}" }
+         .join("\n")
 end
 
 get '/status/:code' do |code|
